@@ -321,3 +321,36 @@ Ostracods are zero where median salinity exceeds 40 ppt and reach their highest 
 Main Channel, North of Phelps Bridge, and Phelps Road all have low ostracod medians despite moderate or low salinity, so salinity alone doesn't fully explain the site-level pattern.
 
 
+# Problem 2. Visualizing total abundance as a function of salinity
+
+## a. Plan your figure
+
+- x-axis: median salinity, `med_sal`, ppt
+- y-axis: log + 1 transformed average abundance per liter, `log_ave_lit`
+- color: `taxon`, each taxon its own color
+- geometry: `geom_point()`, circle points
+- facets: `facet_wrap(~ taxon, scales = "free")`
+
+## b. Wrangle your data
+
+```{r}
+#| label: salinity-abundance-cleaning
+
+# create new object from cleaned aquatic invertebrate data
+abundance_salinity <- aq_ins_clean |> 
+  # keep only the columns needed for the figure
+  select(date_site, site_full, taxon, ave_lit, med_sal) |> 
+  # log + 1 transform the abundance per liter
+  mutate(log_ave_lit = log(ave_lit + 1)) |> 
+  # convert taxon names to title case
+  mutate(taxon = str_replace_all(taxon, "_", " "),
+         taxon = str_to_title(taxon)) |> 
+  # order taxon factor levels by maximum abundance
+  mutate(taxon = fct_reorder(taxon, ave_lit,
+                             .fun = max, .na_rm = TRUE,
+                             .desc = TRUE))
+
+# show 10 random rows
+abundance_salinity |> 
+  slice_sample(n = 10)
+```
