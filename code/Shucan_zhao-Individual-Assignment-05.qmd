@@ -243,8 +243,8 @@ copepods <- ggplot(data = copepods,
 
 - x-axis: different sites
 - y-axis: log + 1 transformed average ostracod abundance per liter
-- geometry to represent average abundance/L: `geom_jitter()`
-- geometry to represent medians: `stat_summary()`
+- geometry to represent average abundance/L: `geom_jitter()`, circle points
+- geometry to represent medians: `stat_summary()`, circle points with a distinct color
 
 ## b. Wrangle your data
 
@@ -263,5 +263,38 @@ ostracods_df |>
   slice_sample(n = 10)
 ```
 
+## c. Code your figure
 
+```{r}
+#| label: ostracod-plot
+#| fig-width: 10
+#| fig-height: 6
+
+# base layer
+ostracods <- ggplot(data = ostracods_df,
+                    # x = site, y = log abundance/L
+                    mapping = aes(x = site_full,
+                                  y = log_ave_lit)) +
+  # first layer: individual survey points
+  geom_jitter(height = 0,
+              width  = 0.1,
+              shape  = 21,
+              size   = 2) +
+  # second layer: median per site, distinct in size and color
+  stat_summary(fun   = "median",
+               geom  = "point",
+               color = "deeppink",
+               size = 5) +
+  # wrap long site labels for readability
+  scale_x_discrete(labels = label_wrap(15)) +
+  # readable axis labels and taxon-specific title
+  labs(x = "Site",
+       y = "log + 1 transformed average abundance/L",
+       title = "Ostracods") +
+  # non-default theme
+  theme_bw()
+
+# display object
+ostracods
+```
 
