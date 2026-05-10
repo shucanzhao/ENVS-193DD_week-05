@@ -41,3 +41,24 @@ library(patchwork)
 ```
 
 
+## Data
+
+```{r}
+#| label: data
+
+# taxonomic information
+taxon_list <- read_csv(here("data", "taxon_list.csv")) 
+
+# aquatic invertebrates
+aq_ins <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx"),
+                    sheet = "Aquatic Insects") 
+
+# site information
+sites <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx"),
+                   sheet = "sites")
+
+# water quality information
+water_quality <- read_xlsx(here("data", "Aquatic Sampling Data-2026-03-10.xlsx"),
+                           sheet = "Water Quality",
+                           na = c("", "n/a", "N/A", "over", "173+")) 
+```
