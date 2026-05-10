@@ -327,9 +327,9 @@ Main Channel, North of Phelps Bridge, and Phelps Road all have low ostracod medi
 
 - x-axis: median salinity, `med_sal`, ppt
 - y-axis: log + 1 transformed average abundance per liter, `log_ave_lit`
-- color: `taxon`, each taxon its own color
+- color: `taxon`, each taxon own color
 - geometry: `geom_point()`, circle points
-- facets: `facet_wrap(~ taxon, scales = "free")`
+- facets: different sites
 
 ## b. Wrangle your data
 
@@ -347,10 +347,48 @@ abundance_salinity <- aq_ins_clean |>
          taxon = str_to_title(taxon)) |> 
   # order taxon factor levels by maximum abundance
   mutate(taxon = fct_reorder(taxon, ave_lit,
-                             .fun = max, .na_rm = TRUE,
+                             .fun = max,
+                             .na_rm = TRUE,
                              .desc = TRUE))
 
 # show 10 random rows
 abundance_salinity |> 
   slice_sample(n = 10)
 ```
+
+
+## c. Code your figure
+
+```{r}
+#| label: abundance-salinity-plot
+#| fig-width: 10
+#| fig-height: 7
+
+# base layer
+ggplot(data = abundance_salinity,
+       # x = salinity, y = log abundance/L, color by taxon
+       mapping = aes(x = med_sal,
+                     y = log_ave_lit,
+                     color = taxon)) +
+  # points for each survey x taxon observation
+  geom_point(alpha = 0.7,
+             size  = 1.8) +
+  # one panel per taxon, free axes
+  facet_wrap(~ taxon) +
+  # custom palette
+  scale_color_brewer(palette = "Paired") +
+  # readable axis labels
+  labs(x = "Median salinity (ppt)",
+       y = "log + 1 transformed average abundance/L") +
+  # non-default theme, legend removed
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+## d. Interpret your figure
+
+With fixed y-axes for each panel, the Ostracod, Copepod and Cladocera are relatively large in absolute log-abundance. Each of them reach 6 or above,  while the remaining six taxa rarely exceed 2 on the same scale. 
+Ostracod and Cladocera show freshwater bias. Their highest points cluster at salinities below ~10 ppt. And the panels are essentially empty above 20 ppt.
+Copepod has points reaching above 6 at both freshwater and high-salinity sites. 
+Hemiptera Corixidae Boatman is mostly low-salinity with a relatively low peak near 4 ppt. 
+Annelida Oligochaete, Annelida Polychaete, Diptera Chironomid, Diptera Ceratopogonidae, Nematode are generally near zero.
