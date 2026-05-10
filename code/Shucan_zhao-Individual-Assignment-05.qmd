@@ -1,5 +1,43 @@
 ---
 title: "Assignment05"
 author: "Shucan Zhao"
-format: pdf
+date: "2026-05-10"
+format: 
+  pdf:
+    include-in-header: 
+       text: |
+         \usepackage{fvextra}
+         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+         \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+execute:
+  message: false
+  warning: false
 ---
+
+# Set up
+
+## Packages
+
+```{r}
+#| label: packages
+
+# general use and cleaning
+library(tidyverse)
+library(here)
+library(janitor)
+library(snakecase)
+
+# wrapping axis labels
+library(scales)
+
+# reading in .xlsx files
+library(readxl)
+
+# visualizing missing data
+library(naniar)
+
+# arranging plots
+library(patchwork)
+```
+
+
