@@ -284,7 +284,7 @@ ostracods <- ggplot(data = ostracods_df,
   stat_summary(fun   = "median",
                geom  = "point",
                color = "deeppink",
-               size = 5) +
+               size = 4) +
   # wrap long site labels for readability
   scale_x_discrete(labels = label_wrap(15)) +
   # readable axis labels and taxon-specific title
@@ -297,4 +297,27 @@ ostracods <- ggplot(data = ostracods_df,
 # display object
 ostracods
 ```
+
+## d. Create a multipanel figure
+
+```{r}
+#| label: multipanel-figure
+#| fig-width: 12
+#| fig-height: 10
+
+# salinity on top, copepods and ostracods side-by-side below
+(salinity) / (copepods | ostracods)
+```
+
+
+## e. Interpret your figure
+- Differences between sites in copepod and ostracod abundance: 
+Copepod medians are the blue circles on the bottom left panel. They are generally non-zero at every site. They have largest at South of Venoco Bridge (about 3.5) and the lowest at Main Channel and North of Phelps Bridge (~0.3). 
+Ostracod medians are the pink circles on the bottom right panel. They are essentially zero at the two Venoco Bridge sites and at North of Phelps Bridge. They have sharply rised at South of Phelps Bridge and Devereux Creek.
+
+- How ostracod abundance may relate (or not) to site-level differences in salinity: 
+Because sites are ordered from highest to lowest median salinity left-to-right in the top panel, the pink ostracod medians generally rise as the red salinity medians fall. 
+Ostracods are zero where median salinity exceeds 40 ppt and reach their highest values at sites with median salinity below 5 ppt. The relationship isn't very corelated. 
+Main Channel, North of Phelps Bridge, and Phelps Road all have low ostracod medians despite moderate or low salinity, so salinity alone doesn't fully explain the site-level pattern.
+
 
