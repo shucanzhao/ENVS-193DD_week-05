@@ -29,4 +29,4 @@ ENVS-193DD_week-05/
 ## Rendered output
 Link to Assignment-05 PDF:
 
-https://github.com/shucanzhao/ENVS-193DD_week-05/blob/103380190c4cff7e8bad8eec91a308c5375c1843/code/Shucan_zhao-Individual-Assignment-05.pdf
+https://github.com/shucanzhao/ENVS-193DD_week-05/blob/b3528a9dae92baf298b63a411e07a3ad0144a027/code/Shucan_zhao-Individual-Assignment-05.pdf
